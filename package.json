@@ -1,0 +1,73 @@
+{
+  "name": "localized-regions",
+  "version": "1.0.0",
+  "description": "Country, province and city data with bilingual localized labels (e.g. \"Spain (España)\") and ISO 3166-1 / ISO 3166-2 codes. Ships all 50 Spanish provinces. Framework-agnostic, drop-in options for react-select and MUI dropdowns.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "data",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "generate": "node scripts/generate.js",
+    "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "npm run generate && npm run build"
+  },
+  "keywords": [
+    "country",
+    "countries",
+    "province",
+    "provinces",
+    "city",
+    "cities",
+    "region",
+    "regions",
+    "iso-3166",
+    "iso-3166-1",
+    "iso-3166-2",
+    "country-codes",
+    "country-list",
+    "country-names",
+    "localized",
+    "bilingual",
+    "i18n",
+    "localization",
+    "country-picker",
+    "country-select",
+    "province-select",
+    "region-picker",
+    "dropdown",
+    "react-select",
+    "mui",
+    "spain",
+    "spanish-provinces",
+    "provincias",
+    "autonomous-communities",
+    "subdivisions",
+    "address",
+    "geo"
+  ],
+  "homepage": "https://github.com/amit-2011/localized-regions-#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amit-2011/localized-regions-.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amit-2011/localized-regions-/issues"
+  },
+  "author": "Amit Tank <amit@techvoot.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {
+    "country-state-city": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "iso-3166-2": "^1.0.0",
+    "typescript": "^5.4.0"
+  }
+}
