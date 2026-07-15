@@ -1,14 +1,10 @@
-import * as path from 'path';
 import { City as CSCCity } from 'country-state-city';
 import { Country, CountryOption, Province, City, Option } from './types';
-
-const DATA = path.join(__dirname, '..', 'data');
-// Static, build-time generated data (see scripts/generate.js). Loaded at runtime
-// so tsc does not need to copy JSON into dist.
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const countries: Country[] = require(path.join(DATA, 'countries.json'));
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const provinces: Record<string, Province[]> = require(path.join(DATA, 'provinces.json'));
+// Static, build-time generated data (see scripts/generate.js). Imported statically
+// so the data bundles cleanly in browser bundlers (webpack/vite) with no Node `path`
+// or dynamic `require`.
+import countries from './data/countries';
+import provinces from './data/provinces';
 
 function displayName(code: string, locale: string): string | undefined {
   try {

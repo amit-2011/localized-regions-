@@ -19,7 +19,7 @@ const path = require('path');
 const { Country } = require('country-state-city');
 const iso = require('iso-3166-2');
 
-const OUT = path.join(__dirname, '..', 'data');
+const OUT = path.join(__dirname, '..', 'src', 'data');
 fs.mkdirSync(OUT, { recursive: true });
 
 // ---------------------------------------------------------------- COUNTRIES
@@ -119,10 +119,20 @@ for (const c of countries) {
   if (list.length) provinces[c.code] = list;
 }
 
-fs.writeFileSync(path.join(OUT, 'countries.json'), JSON.stringify(countries, null, 2) + '\n');
-fs.writeFileSync(path.join(OUT, 'provinces.json'), JSON.stringify(provinces, null, 2) + '\n');
+// Emit as TypeScript modules (not JSON loaded via path) so consumers can bundle the
+// data statically in the browser without Node `path`/`__dirname`/dynamic `require`.
+const countriesTs =
+  `import type { Country } from '../types';\n\n` +
+  `const countries: Country[] = ${JSON.stringify(countries, null, 2)};\n\n` +
+  `export default countries;\n`;
+const provincesTs =
+  `import type { Province } from '../types';\n\n` +
+  `const provinces: Record<string, Province[]> = ${JSON.stringify(provinces, null, 2)};\n\n` +
+  `export default provinces;\n`;
+fs.writeFileSync(path.join(OUT, 'countries.ts'), countriesTs);
+fs.writeFileSync(path.join(OUT, 'provinces.ts'), provincesTs);
 
-console.log('Generated data/');
+console.log('Generated src/data/');
 console.log('  countries:', countries.length);
 console.log('  countries with provinces:', Object.keys(provinces).length);
 console.log('  Spain provinces:', provinces.ES.length, '(expected 50)');

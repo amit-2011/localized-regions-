@@ -1,4 +1,6 @@
-{
+import type { Province } from '../types';
+
+const provinces: Record<string, Province[]> = {
   "AF": [
     {
       "code": "AF-BDS",
@@ -31027,4 +31029,6 @@
       "type": "Province"
     }
   ]
-}
+};
+
+export default provinces;

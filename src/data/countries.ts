@@ -1,4 +1,6 @@
-[
+import type { Country } from '../types';
+
+const countries: Country[] = [
   {
     "code": "AF",
     "name": "Afghanistan"
@@ -999,4 +1001,6 @@
     "code": "ZW",
     "name": "Zimbabwe"
   }
-]
+];
+
+export default countries;
