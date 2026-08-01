@@ -11,7 +11,7 @@ export interface CountryOption {
   name: string;
   /** Name in the requested locale, e.g. "España" (undefined when locale is en/absent) */
   localized?: string;
-  /** Display label, e.g. "Spain (España)" when localized, else "Spain" */
+  /** Display label, e.g. "España (Spain)" when localized, else "Spain" */
   label: string;
 }
 

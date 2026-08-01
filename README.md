@@ -6,7 +6,7 @@
 [![types](https://img.shields.io/npm/types/localized-regions.svg)](./dist/index.d.ts)
 
 **Country, province and city data with bilingual localized labels and ISO 3166 codes.**
-Get country / province / city dropdown options with labels like `Spain (España)`, stable ISO
+Get country / province / city dropdown options with labels like `España (Spain)`, stable ISO
 3166-1 and ISO 3166-2 codes, and the full set of **50 Spanish provinces** (not the 17
 autonomous communities). Framework-agnostic and TypeScript-first: the data drops straight into
 **react-select**, **MUI Autocomplete**, or any dropdown.
@@ -14,13 +14,13 @@ autonomous communities). Framework-agnostic and TypeScript-first: the data drops
 ```ts
 import { countryOptions, provinceOptions } from 'localized-regions';
 
-countryOptions('es');   // [{ value: 'ES', label: 'Spain (España)' }, { value: 'NL', label: 'Netherlands (Países Bajos)' }, ...]
+countryOptions('es');   // [{ value: 'ES', label: 'España (Spain)' }, { value: 'NL', label: 'Nederland (Netherlands)' }, ...]
 provinceOptions('ES');  // [{ value: 'ES-MA', label: 'Málaga' }, { value: 'ES-B', label: 'Barcelona' }, ...]
 ```
 
 ## Features
 
-- **Bilingual / localized country labels** - `Spain (España)`, `Germany (Alemania)`, `France (Francia)`, computed from the browser-native `Intl.DisplayNames` for any locale.
+- **Bilingual / localized country labels** - `España (Spain)`, `Deutschland (Germany)`, `Nederland (Netherlands)`, computed from the browser-native `Intl.DisplayNames` for any locale.
 - **Correct Spanish provinces** - all **50 provinces** with ISO 3166-2 codes and their parent autonomous community. (Popular datasets like `country-state-city` return only ~16 of them for Spain.)
 - **Stable, invoicing-safe values** - country = ISO 3166-1 code (`ES`), province = ISO 3166-2 code (`ES-MA`). Labels are display-only.
 - **Full city database** - cities for every country, sourced from `country-state-city` at runtime.
@@ -43,7 +43,7 @@ import {
 } from 'localized-regions';
 
 // Bilingual country labels (the locale drives the native part)
-getCountries({ locale: 'es' });  // [{ code:'ES', name:'Spain', localized:'España', label:'Spain (España)' }, ...]
+getCountries({ locale: 'es' });  // [{ code:'ES', name:'Spain', localized:'España', label:'España (Spain)' }, ...]
 getCountries();                  // English-only labels
 
 // Spain -> 50 provinces (ISO 3166-2 codes + community grouping)
@@ -53,11 +53,11 @@ getProvinces('ES');              // [{ code:'ES-MA', countryCode:'ES', name:'Má
 getCities('ES', 'ES-MA');
 
 // Ready-to-use dropdown options
-countryOptions('es');            // [{ value:'ES', label:'Spain (España)' }, ...]
+countryOptions('es');            // [{ value:'ES', label:'España (Spain)' }, ...]
 provinceOptions('ES');           // [{ value:'ES-MA', label:'Málaga' }, ...]
 cityOptions('ES', 'ES-MA');      // [{ value:'Málaga', label:'Málaga' }, ...]
 
-formatCountryLabel('ES', 'es');  // "Spain (España)"
+formatCountryLabel('ES', 'es');  // "España (Spain)"
 ```
 
 ### With react-select (editable / creatable dropdowns)

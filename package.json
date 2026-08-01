@@ -1,7 +1,7 @@
 {
   "name": "localized-regions",
-  "version": "1.0.1",
-  "description": "Country, province and city data with bilingual localized labels (e.g. \"Spain (España)\") and ISO 3166-1 / ISO 3166-2 codes. Ships all 50 Spanish provinces. Framework-agnostic, drop-in options for react-select and MUI dropdowns.",
+  "version": "1.0.2",
+  "description": "Country, province and city data with bilingual localized labels (e.g. \"España (Spain)\") and ISO 3166-1 / ISO 3166-2 codes. Ships all 50 Spanish provinces. Framework-agnostic, drop-in options for react-select and MUI dropdowns.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

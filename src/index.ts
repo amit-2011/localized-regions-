@@ -15,12 +15,12 @@ function displayName(code: string, locale: string): string | undefined {
 }
 
 function buildLabel(name: string, localized?: string): string {
-  return localized && localized !== name ? `${name} (${localized})` : name;
+  return localized && localized !== name ? `${localized} (${name})` : name;
 }
 
 /**
  * All countries. Pass a locale (e.g. "es") to get bilingual labels like
- * "Spain (España)". Omit or pass "en" for English-only labels.
+ * "España (Spain)". Omit or pass "en" for English-only labels.
  */
 export function getCountries(opts: { locale?: string } = {}): CountryOption[] {
   const { locale } = opts;
@@ -34,7 +34,7 @@ export function getCountry(code: string): Country | undefined {
   return countries.find((c) => c.code === code.toUpperCase());
 }
 
-/** Bilingual (or English) display label for a single country code. */
+/** Bilingual (Native (English)) or native-only display label for a single country code. */
 export function formatCountryLabel(code: string, locale?: string): string {
   const c = getCountry(code);
   if (!c) return code;
