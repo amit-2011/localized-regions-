@@ -1,6 +1,6 @@
 import type { Province } from '../types';
 
-const provinces: Record<string, Province[]> = {
+const data: Record<string, Province[]> = {
   "AF": [
     {
       "code": "AF-BDS",
@@ -17873,24 +17873,6 @@ const provinces: Record<string, Province[]> = {
   ],
   "NL": [
     {
-      "code": "NL-AW",
-      "countryCode": "NL",
-      "name": "Aruba",
-      "type": "Country"
-    },
-    {
-      "code": "NL-BQ1",
-      "countryCode": "NL",
-      "name": "Bonaire",
-      "type": "Special municipality"
-    },
-    {
-      "code": "NL-CW",
-      "countryCode": "NL",
-      "name": "Curaçao",
-      "type": "Country"
-    },
-    {
       "code": "NL-DR",
       "countryCode": "NL",
       "name": "Drenthe",
@@ -17943,24 +17925,6 @@ const provinces: Record<string, Province[]> = {
       "countryCode": "NL",
       "name": "Overijssel",
       "type": "Province"
-    },
-    {
-      "code": "NL-BQ2",
-      "countryCode": "NL",
-      "name": "Saba",
-      "type": "Special municipality"
-    },
-    {
-      "code": "NL-BQ3",
-      "countryCode": "NL",
-      "name": "Sint Eustatius",
-      "type": "Special municipality"
-    },
-    {
-      "code": "NL-SX",
-      "countryCode": "NL",
-      "name": "Sint Maarten",
-      "type": "Country"
     },
     {
       "code": "NL-UT",
@@ -31031,4 +30995,4 @@ const provinces: Record<string, Province[]> = {
   ]
 };
 
-export default provinces;
+export default data;

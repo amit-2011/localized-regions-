@@ -36,6 +36,12 @@ export interface City {
   stateCode?: string;
   latitude?: string;
   longitude?: string;
+  /**
+   * Extra strings that should match while typing but are never displayed or
+   * stored, e.g. "'s-Gravenhage" for Den Haag (RAT-2000). Use cityMatches()
+   * rather than reading this directly.
+   */
+  aliases?: string[];
 }
 
 /** react-select / MUI style option */

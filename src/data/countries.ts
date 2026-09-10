@@ -1,6 +1,6 @@
 import type { Country } from '../types';
 
-const countries: Country[] = [
+const data: Country[] = [
   {
     "code": "AF",
     "name": "Afghanistan"
@@ -1003,4 +1003,4 @@ const countries: Country[] = [
   }
 ];
 
-export default countries;
+export default data;
