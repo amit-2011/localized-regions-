@@ -5,6 +5,7 @@ import { Country, CountryOption, Province, City, Option } from './types';
 // or dynamic `require`.
 import countries from './data/countries';
 import provinces from './data/provinces';
+import citiesNL from './data/cities-nl';
 
 function displayName(code: string, locale: string): string | undefined {
   try {
@@ -67,9 +68,21 @@ const ES_COMMUNITY_TO_SOURCE: Record<string, string> = {
  * Cities. With no provinceCode, returns all cities of the country. With a
  * provinceCode, returns cities for that subdivision (Spain: mapped to the
  * parent community, best-effort).
+ *
+ * The Netherlands is served from our own baked list (RAT-2000) rather than
+ * country-state-city, whose NL data is 19% "Gemeente X" municipality records
+ * and missing roughly 1000 real places. See scripts/generate.js.
  */
 export function getCities(countryCode: string, provinceCode?: string): City[] {
   const cc = countryCode.toUpperCase();
+  if (cc === 'NL') {
+    if (!provinceCode) {
+      return Object.values(citiesNL)
+        .flat()
+        .sort((a, b) => a.name.localeCompare(b.name, 'nl'));
+    }
+    return citiesNL[provinceCode.toUpperCase()] || [];
+  }
   if (!provinceCode) {
     return (CSCCity.getCitiesOfCountry(cc) as unknown as City[]) || [];
   }
@@ -81,6 +94,22 @@ export function getCities(countryCode: string, provinceCode?: string): City[] {
   }
   const bare = provinceCode.includes('-') ? provinceCode.split('-').slice(1).join('-') : provinceCode;
   return (CSCCity.getCitiesOfState(cc, bare) as unknown as City[]) || [];
+}
+
+/**
+ * Does this city match what the user typed? Matches the display name and any
+ * alias, so typing "'s-Gravenhage" finds "Den Haag" without ever offering the
+ * formal name as a selectable option (RAT-2000).
+ *
+ * Pass it to react-select's filterOption. Callers using a Creatable select
+ * must let the synthetic "create" option through before calling this - it has
+ * no `name` and would otherwise be filtered away.
+ */
+export function cityMatches(city: City, input: string): boolean {
+  const query = input.trim().toLowerCase();
+  if (!query) return true;
+  if (city.name.toLowerCase().includes(query)) return true;
+  return (city.aliases ?? []).some((alias) => alias.toLowerCase().includes(query));
 }
 
 // --------------------------------------------------- ready-to-use dropdown options

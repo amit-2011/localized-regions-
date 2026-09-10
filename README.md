@@ -24,6 +24,7 @@ provinceOptions('ES');  // [{ value: 'ES-MA', label: 'Málaga' }, { value: 'ES-B
 - **Correct Spanish provinces** - all **50 provinces** with ISO 3166-2 codes and their parent autonomous community. (Popular datasets like `country-state-city` return only ~16 of them for Spain.)
 - **Stable, invoicing-safe values** - country = ISO 3166-1 code (`ES`), province = ISO 3166-2 code (`ES-MA`). Labels are display-only.
 - **Full city database** - cities for every country, sourced from `country-state-city` at runtime.
+- **Correct Dutch cities** - the Netherlands is served from the official Dutch place register (BAG woonplaatsen), not `country-state-city`, whose NL list is 19% `Gemeente X` municipality records and missing roughly 1000 real places.
 - **Framework-agnostic** - no React / MUI / Chakra dependency. Plain data plus ready-to-use `{ value, label }` options.
 - **TypeScript types included.**
 
@@ -92,6 +93,7 @@ import { countryOptions } from 'localized-regions';
 | `getProvinces(countryCode)` | `Province[]` (Spain = curated 50) |
 | `getProvince(provinceCode)` | `Province` |
 | `getCities(countryCode, provinceCode?)` | `City[]` |
+| `cityMatches(city, input)` | `boolean` - does this city match typed input, by name or alias |
 | `countryOptions(locale?)` | `Option[]` (`{ value, label }`) |
 | `provinceOptions(countryCode)` | `Option[]` |
 | `cityOptions(countryCode, provinceCode?)` | `Option[]` |
@@ -102,13 +104,41 @@ Data is generated at build time (`npm run generate`) and committed under `data/`
 
 - **Countries** - `Intl.DisplayNames` (English) plus a code list, 250 countries.
 - **Provinces** - `iso-3166-2` subdivisions. Spain is curated to 50 provinces, with 4 regional-language names aliased to their common form (Nafarroa -> Navarra, Balears -> Balearic Islands, Alacant -> Alicante, Castelló -> Castellón).
-- **Cities** - `country-state-city` at runtime.
+- **Cities** - `country-state-city` at runtime, except the Netherlands.
+- **Netherlands cities** - the official BAG woonplaats register, fetched at build time from the PDOK Locatieserver and baked into `data/cities-nl`. No runtime API call and no API key. Generation fails if a `Gemeente X` entry ever reappears.
 
 Regenerate after a data-source bump:
 
 ```bash
 npm run generate && npm run build
 ```
+
+## Netherlands cities
+
+NL city data comes from the official Dutch place register (BAG woonplaatsen, via
+the PDOK Locatieserver) rather than `country-state-city`, whose NL list contains
+325 `Gemeente X` municipality records and is missing roughly 1000 real places.
+
+The Hague is returned as `Den Haag` - the name the municipality, PostNL and
+Taaladvies all use for addresses. Its formal name `'s-Gravenhage` is kept as a
+search alias on `City.aliases`, never as a separate selectable option. Use
+`cityMatches` as your select's `filterOption` so aliases are searchable:
+
+```js
+import { getCities, cityMatches } from 'localized-regions';
+
+<Select
+  options={getCities('NL', 'NL-ZH')}
+  getOptionLabel={(c) => c.name}
+  getOptionValue={(c) => c.name}
+  filterOption={(option, input) => cityMatches(option.data, input)}
+/>
+```
+
+`getProvinces('NL')` returns the 12 real provinces. Aruba, Curacao and Sint
+Maarten are separate constituent countries, and Bonaire, Saba and Sint Eustatius
+are Caribbean special municipalities; ISO 3166-2 lists all six under NL, but they
+are not provinces and have no cities, so they are excluded.
 
 ## Notes and limitations
 
